@@ -1,0 +1,29 @@
+{
+  "name": "preview-compiler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
+    "build:watch": "tsc --watch",
+    "test": "node dist/index.js --schema=schema.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hakuna-tata/preview-compiler.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/hakuna-tata/preview-compiler#readme",
+  "devDependencies": {
+    "@types/node": "^22.13.13",
+    "@types/yargs": "^17.0.33",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "yargs": "^17.7.2"
+  }
+}
