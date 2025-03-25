@@ -1,7 +1,9 @@
 {
-    "pkgName": "",
-    "utilDeps": "",
+    "name": "",
+    "version": "",
+    "dslTree": [],
     "materialDeps": "",
     "usedMaterials": [],
-    "dslTree": []
+    "utilDeps": [],
+    "usedUtils": []
 }
