@@ -1,9 +1,46 @@
 {
-    "name": "",
-    "version": "",
-    "dslTree": [],
-    "materialDeps": "",
-    "usedMaterials": [],
-    "utilDeps": [],
-    "usedUtils": []
+  "name": "",
+  "version": "",
+  "dslTree": [],
+  "materialDeps": [
+    {
+      "package": "package1",
+      "version": "1.0.0",
+      "library": "lib1",
+      "cdnUrl": "https://cdn.example.com/lib1",
+      "debugUrl": "https://debug.example.com/lib1"
+    },
+    {
+      "package": "package2",
+      "version": "1.0.0",
+      "library": "lib2",
+      "cdnUrl": "https://cdn.example.com/lib2",
+      "debugUrl": ""
+    }
+  ],
+  "usedMaterials": [
+    {
+      "package": "package1",
+      "version": "1.0.0",
+      "exportName": "component1",
+      "isDestruction": false,
+      "exportPath": ""
+    },
+    {
+      "package": "package1",
+      "version": "1.0.0",
+      "exportName": "component2",
+      "isDestruction": false,
+      "exportPath": "/es/components"
+    },
+    {
+      "package": "package2",
+      "version": "1.0.0",
+      "exportName": "component3",
+      "isDestruction": true,
+      "exportPath": ""
+    }
+  ],
+  "utilDeps": [],
+  "usedUtils": []
 }

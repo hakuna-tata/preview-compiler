@@ -24,23 +24,23 @@ export interface Schema {
   usedMaterials: Array<{
     package: string;
     version: string;
-    componentName: string;
+    exportName: string;
     isDestruction: boolean;
     exportPath: string;
   }>;
-  utilDeps?: Array<{
-    pkgName: string;
+  utilDeps: Array<{
+    package: string;
     version: string;
     library: string;
     cdnUrl: string;
     debugUrl: string;
-  } | undefined>;
-  usedUtils?: Array<{
+  }>;
+  usedUtils: Array<{
     package: string;
     version: string;
-    utilName: string;
+    exportName: string;
     isDestruction: boolean;
     exportPath: string;
-  } | undefined>;
+  }>;
   [key: string]: any;
 }

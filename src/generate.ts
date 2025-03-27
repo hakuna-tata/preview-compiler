@@ -1,8 +1,5 @@
 import { Schema } from './type';
-import {
-  getMaterialsExternal, 
-  getUtilsExternal,
-} from './globalExternalAssets';
+import { getExternal } from './globalExternalAssets';
 
 export const generate = async (schema: Schema, options = {}) => {
   const {
@@ -12,6 +9,6 @@ export const generate = async (schema: Schema, options = {}) => {
     usedUtils,
   } = schema || {};
   // 物料库 和 工具库 externals 配置
-  const materialExternalConfig = getMaterialsExternal(materialDeps, usedMaterials);
-  const utilExternalConfig = getUtilsExternal(utilDeps, usedUtils);
+  const materialExternalConfig = getExternal(materialDeps, usedMaterials);
+  const utilExternalConfig = getExternal(utilDeps, usedUtils);
 }
