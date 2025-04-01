@@ -1,3 +1,4 @@
 import { getSchema } from './data';
+import { generate } from './generate';
 
-getSchema().then(res => console.log(res));
+getSchema().then(res => generate(res));

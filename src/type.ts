@@ -1,3 +1,19 @@
+export interface DepType {
+  package: string;
+  version: string;
+  library: string;
+  cdnUrl: string;
+  debugUrl: string;
+}
+
+export interface UsedDepsType {
+  package: string;
+  version: string;
+  exportName: string;
+  isDestruction: boolean;
+  exportPath: string;
+}
+
 export interface Schema {
   name: string;
   version: string;
@@ -14,33 +30,9 @@ export interface Schema {
     meta?: Record<string, any>;
     [key: string]: any;
   }];
-  materialDeps: Array<{
-    package: string;
-    version: string;
-    library: string;
-    cdnUrl: string;
-    debugUrl: string;
-  }>;
-  usedMaterials: Array<{
-    package: string;
-    version: string;
-    exportName: string;
-    isDestruction: boolean;
-    exportPath: string;
-  }>;
-  utilDeps: Array<{
-    package: string;
-    version: string;
-    library: string;
-    cdnUrl: string;
-    debugUrl: string;
-  }>;
-  usedUtils: Array<{
-    package: string;
-    version: string;
-    exportName: string;
-    isDestruction: boolean;
-    exportPath: string;
-  }>;
+  materialDeps: Array<DepType>;
+  usedMaterials: Array<UsedDepsType>;
+  utilDeps: Array<DepType>;
+  usedUtils: Array<UsedDepsType>;
   [key: string]: any;
 }

@@ -31,7 +31,7 @@
       "version": "1.0.0",
       "exportName": "component2",
       "isDestruction": false,
-      "exportPath": "/es/components"
+      "exportPath": "es/components"
     },
     {
       "package": "package2",
