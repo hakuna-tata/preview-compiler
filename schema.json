@@ -1,46 +1,57 @@
 {
   "name": "",
   "version": "",
-  "dslTree": [],
+  "dslTree": [
+    {
+      "sourceCodeMap": {
+        "index.jsx": "import React from 'react';\nimport { Button, Space } from 'antd-mobile';\nimport kebabCase from 'lodash/kebabCase';\nimport { useTime } from './hooks/useTime';\nimport { getName } from './utils';\nimport './styles.css';\n\nfunction App() {\n  const time = useTime();\n  const name = getName();\n\n  return (\n    <>\n      <Space wrap>\n        <Button\n          onClick={() => {\n            alert('hello.');\n          }}\n        >\n          Default\n        </Button>\n        <Button color='primary'>Primary</Button>\n        <Button color='success'>Success</Button>\n        <Button color='danger'>Danger</Button>\n        <Button color='warning'>Warning</Button>\n      </Space>\n      <p>{kebabCase('Foo Bar')}</p>\n      <div>{name}: {time}</div>\n    </>\n  );\n}\n\nexport default App;",
+        "hooks/useTime.js": "import { useState, useEffect } from 'react';\n\nexport function useTime() {\n  const [time, setTime] = useState(new Date().toLocaleTimeString());\n  \n  useEffect(() => {\n    const interval = setInterval(() => {\n      setTime(new Date().toLocaleTimeString());\n    }, 1000);\n    return () => clearInterval(interval);\n  }, []);\n  return time;\n}",
+        "utils.js": "export function getName() {\n    return 'John';\n}",
+        "styles.css": "div {\n    color: red;\n}"
+      }
+    }
+  ],
   "materialDeps": [
     {
-      "package": "package1",
-      "version": "1.0.0",
-      "library": "lib1",
-      "cdnUrl": "https://cdn.example.com/lib1",
-      "debugUrl": "https://debug.example.com/lib1"
-    },
-    {
-      "package": "package2",
-      "version": "1.0.0",
-      "library": "lib2",
-      "cdnUrl": "https://cdn.example.com/lib2",
+      "package": "antd-mobile",
+      "version": "5.38.0",
+      "library": "antdMobile",
+      "cdnUrl": "https://cdnjs.cloudflare.com/ajax/libs/antd-mobile/5.38.0/antd-mobile.umd.min.js",
       "debugUrl": ""
     }
   ],
   "usedMaterials": [
     {
-      "package": "package1",
-      "version": "1.0.0",
-      "exportName": "component1",
-      "isDestruction": false,
+      "package": "antd-mobile",
+      "version": "5.38.0",
+      "exportName": "Space",
+      "isDestruction": true,
       "exportPath": ""
     },
     {
-      "package": "package1",
-      "version": "1.0.0",
-      "exportName": "component2",
-      "isDestruction": false,
-      "exportPath": "es/components"
-    },
-    {
-      "package": "package2",
-      "version": "1.0.0",
-      "exportName": "component3",
+      "package": "antd-mobile",
+      "version": "5.38.0",
+      "exportName": "Button",
       "isDestruction": true,
       "exportPath": ""
     }
   ],
-  "utilDeps": [],
-  "usedUtils": []
+  "utilDeps": [
+    {
+      "package": "lodash",
+      "version": "4.17.21",
+      "library": "_",
+      "cdnUrl": "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js",
+      "debugUrl": ""
+    }
+  ],
+  "usedUtils": [
+    {
+      "package": "lodash",
+      "version": "4.17.21",
+      "exportName": "kebabCase",
+      "isDestruction": false,
+      "exportPath": "/kebabCase"
+    }
+  ]
 }
