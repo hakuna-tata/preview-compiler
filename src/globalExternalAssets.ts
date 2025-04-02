@@ -14,7 +14,7 @@ export const getExternal = <
     if (dep) {
       const umdLibraryName = `Compiler_${dep.library}_Debugger`;
       const path = usedDep.isDestruction
-        ? `${usedDep.package}${usedDep.exportPath ? `${usedDep.exportPath}` : '/'}${usedDep.exportName}`
+        ? `${usedDep.package}${usedDep.exportPath ? `${usedDep.exportPath}` : ''}/${usedDep.exportName}`
         : `${usedDep.package}${usedDep.exportPath ? `${usedDep.exportPath}` : ''}`
 
       result[path] = { ref: `${umdLibraryName}.${usedDep.exportName}` };
