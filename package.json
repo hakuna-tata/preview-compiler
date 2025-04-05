@@ -18,6 +18,7 @@
   "license": "ISC",
   "homepage": "https://github.com/hakuna-tata/preview-compiler#readme",
   "devDependencies": {
+    "@types/babel__standalone": "^7.1.9",
     "@types/lodash": "^4.17.16",
     "@types/node": "^22.13.13",
     "@types/yargs": "^17.0.33",
@@ -25,6 +26,9 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
+    "@babel/parser": "^7.27.0",
+    "@babel/standalone": "^7.27.0",
+    "@babel/traverse": "^7.27.0",
     "lodash": "^4.17.21",
     "yargs": "^17.7.2"
   }

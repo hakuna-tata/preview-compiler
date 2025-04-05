@@ -18,17 +18,18 @@ export const generate = async (schema: Schema, options = {}) => {
   const schemaMeta = schema?.dslTree?.[0]?.meta || {};
   // 编译代码
   const fileMap = schema?.dslTree?.[0]?.sourceCodeMap || {};
-  const entryFile = Object.keys(fileMap).find((key) => {
-    return key === 'index.jsx' || key === 'index.js'
+  const entryFilePath = Object.keys(fileMap).find((key) => {
+    return key === 'index.jsx' || key === 'index.tsx';
   });
-
-  if (!entryFile) {
+  if (!entryFilePath) {
     console.error('不存在入口文件');
     return;
   }
+  
   const compiledCode = new Compiler({
     fileMap,
-    entryFile,
     moduleName: 'Preview_Compiler',
-  }).compiler();
+  }).buildModuleMap(entryFilePath);
+
+  console.log(compiledCode);
 }
