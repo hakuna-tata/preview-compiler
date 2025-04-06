@@ -1,6 +1,8 @@
 import { Schema } from './type';
 import { getExternal } from './globalExternalAssets';
 import { Compiler } from './compiler';
+import path from 'path';
+import fs from 'fs';
 
 export const generate = async (schema: Schema, options = {}) => {
   const {
@@ -27,9 +29,10 @@ export const generate = async (schema: Schema, options = {}) => {
   }
   
   const compiledCode = new Compiler({
+    entryFilePath,
     fileMap,
     moduleName: 'Preview_Compiler',
-  }).buildModuleMap(entryFilePath);
+  }).generateBundledCode();
 
   console.log(compiledCode);
 }

@@ -26,9 +26,11 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
+    "@babel/core": "^7.26.10",
     "@babel/parser": "^7.27.0",
     "@babel/standalone": "^7.27.0",
     "@babel/traverse": "^7.27.0",
+    "@babel/types": "^7.27.0",
     "lodash": "^4.17.21",
     "yargs": "^17.7.2"
   }
