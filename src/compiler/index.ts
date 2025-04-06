@@ -16,12 +16,14 @@ interface CompilerOpts {
   fileMap: Record<string, string>;
   entryFilePath: string;
   moduleName: string;
+  externals?: Record<string, { ref: string }>;
 }
 
 export class Compiler {
   private fileMap: Record<string, string> = {};
   private entryFilePath: string;
   private moduleName: string;
+  private externals?: Record<string, { ref: string }>;
 
   private compiledModuleMap: Record<string, string> = {};
   private fileVisited = new Set();
@@ -30,6 +32,7 @@ export class Compiler {
     this.fileMap = options.fileMap;
     this.entryFilePath = options.entryFilePath;
     this.moduleName = options.moduleName;
+    this.externals = options.externals;
   }
 
   private compileFile({ filePath, code } : { filePath: string, code: string }) {
@@ -123,6 +126,7 @@ export class Compiler {
     const execFileMapStr = this.buildExecFileMap(this.entryFilePath);
 
     const content =  `(function() {
+var __external_ref_map__ = ${JSON.stringify(this.externals || {})};
 var __exec_file_map__ = ${execFileMapStr};
 
 var __require__ = ${createRequire()}

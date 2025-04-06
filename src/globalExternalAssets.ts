@@ -8,16 +8,23 @@ export const getExternal = <
   usedDeps: U[],
 ) => {
   const result: Record<string, { ref: string }> = {};
+  const externalEquationCodeList = [];
+
   for (const usedDep of usedDeps) {
     const dep = deps.find((d) => d.package === usedDep.package && d.version === usedDep.version);
 
     if (dep) {
-      const umdLibraryName = `Compiler_${dep.library}_Debugger`;
-      const path = usedDep.isDestruction
-        ? `${usedDep.package}${usedDep.exportPath ? `${usedDep.exportPath}` : ''}/${usedDep.exportName}`
-        : `${usedDep.package}${usedDep.exportPath ? `${usedDep.exportPath}` : ''}`
-
-      result[path] = { ref: `${umdLibraryName}.${usedDep.exportName}` };
+      // const umdLibraryName = `Compiler_${dep.library}_Debugger`;
+      const path = `${usedDep.package}${usedDep.exportPath ? `${usedDep.exportPath}` : ''}`;
+      
+      externalEquationCodeList.push();
+      if (!result[path]) {
+        result[path] = {
+          ref: usedDep.isDestruction 
+            ? `${dep.library}`
+            : `${dep.library}.${usedDep.exportName}`
+        };
+      }
     }
   }
 
