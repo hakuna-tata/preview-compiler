@@ -49,7 +49,15 @@ export class Compiler {
       ],
       plugins: [
         processRequireExpression,
-        availablePlugins['transform-runtime'],
+        [
+          availablePlugins['transform-runtime'],
+          {
+            'corejs': false,
+            'helpers': false,
+            'regenerator': true,
+            'useESModules': false
+          }
+        ],
         availablePlugins['syntax-jsx'],
         availablePlugins['proposal-optional-chaining'],
         availablePlugins['proposal-class-properties'],
@@ -60,8 +68,8 @@ export class Compiler {
   private createModuleWrapper({ filePath, code } : { filePath: string, code: string }) {
     if (filePath.endsWith('.css')) {
       return `(function() {
-        const style = document.createElement('style');
-        style.textContent = ${JSON.stringify(code)};
+        var style = document.createElement('style');
+        style.textContent = ${JSON.stringify(code.replace(/\n/g, '\\n'))};
         document.head.appendChild(style);
       })`;
     }
@@ -104,7 +112,7 @@ export class Compiler {
     });
 
     const execFileStr = Object.entries(this.compiledModuleMap).map(([key, value]) => {
-      return `['${key}']: ${value}`
+      return `['${key}']: \`${value}\``
     }).join(',\n');
     return `{\n ${execFileStr}\n}`;
   }
@@ -132,7 +140,7 @@ var __exec_file_map__ = ${execFileMapStr};
 var __require__ = ${createRequire()}
 
 var exports = {};
-var entryExports = __require__(${this.entryFilePath});
+var entryExports = __require__('${this.entryFilePath}');
 exports.default = entryExports.default || entryExports;
 
 return exports;

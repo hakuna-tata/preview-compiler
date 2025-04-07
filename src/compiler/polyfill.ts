@@ -1,26 +1,32 @@
 export const createRequire = () => {
   return `function(filePath) {
   var module = { exports: {} };
-  var matchedPath = __exec_file_map__[filePath]};
-
-  if (!matchedPath) {
+  var _filePath = filePath;
+  var matchedPathStr = __exec_file_map__[_filePath];
+ 
+  if (!matchedPathStr) {
     var jsExtensions = ['.js', '.ts', '.jsx', '.tsx'];
     for (var j = 0; j < jsExtensions.length; j++) {
       var pathWithExt = filePath + jsExtensions[j];
 
       if (__exec_file_map__[pathWithExt]) {
-        matchedPath = pathWithExt;
+        _filePath = pathWithExt;
         break;
       }
     }
   }
 
-  var fn = __exec_file_map__[matchedPath];
-  if (fn) {
-    fn(__require__, module, module.exports);
-  } else if (filePath.indexOf(\'@babel/runtime\') === 0) ) {
-    // @babel/runtime 相关依赖，从全局对象中获取
-    module.exports = window[filePath];
+  matchedPathStr = __exec_file_map__[_filePath];
+  if (matchedPathStr) {
+    try {
+      // 去除外层的立即执行函数包裹，只保留内部函数体
+      var functionBody = matchedPathStr.slice(matchedPathStr.indexOf('{') + 1, matchedPathStr.lastIndexOf('}'));
+      // 使用 new Function 将字符串转换为函数
+      var matchedPathFn = new Function('__require__', 'module', 'exports', functionBody);
+      matchedPathFn(__require__, module, module.exports);
+    } catch (error) {
+      console.error('执行模块代码时出错:', matchedPathStr, error);
+    }
   } else {
     // 第三方包
     var ref = __external_ref_map__[filePath] && __external_ref_map__[filePath].ref;
