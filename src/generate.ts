@@ -31,6 +31,10 @@ export const generate = async (schema: Schema, options = {}) => {
     externals: {
       ...materialExternalConfig,
       ...utilExternalConfig,
+      ...{
+        'react': { ref: 'React' },
+        'react-dom': { ref: 'ReactDOM' },
+      }
     },
     moduleName: 'Preview_Compiler',
   }).generateBundledCode();

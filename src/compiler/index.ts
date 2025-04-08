@@ -76,6 +76,8 @@ export class Compiler {
 
     return `(function(__require__, module, exports) {
       ${code}
+      
+      return exports;
     })`;
   }
 
@@ -133,18 +135,15 @@ export class Compiler {
   public generateBundledCode() {
     const execFileMapStr = this.buildExecFileMap(this.entryFilePath);
 
-    const content =  `(function() {
+    const content =  `
 var __external_ref_map__ = ${JSON.stringify(this.externals || {})};
 var __exec_file_map__ = ${execFileMapStr};
 
 var __require__ = ${createRequire()}
 
-var exports = {};
 var entryExports = __require__('${this.entryFilePath}');
-exports.default = entryExports.default || entryExports;
 
-return exports;
-})()
+return entryExports.default;
     `;
 
     return this.wrapWithUmd(content);

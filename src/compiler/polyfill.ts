@@ -2,12 +2,20 @@ export const createRequire = () => {
   return `function(filePath) {
   var module = { exports: {} };
   var _filePath = filePath;
+
+  if (_filePath.startsWith('./')) {
+    _filePath = _filePath.slice(2);
+  }
+  if (_filePath.startsWith('../')) {
+    // 这里简单处理，实际项目可能需要更复杂的路径解析
+    _filePath = _filePath.slice(3);
+  }
+
   var matchedPathStr = __exec_file_map__[_filePath];
- 
   if (!matchedPathStr) {
     var jsExtensions = ['.js', '.ts', '.jsx', '.tsx'];
     for (var j = 0; j < jsExtensions.length; j++) {
-      var pathWithExt = filePath + jsExtensions[j];
+      var pathWithExt = _filePath + jsExtensions[j];
 
       if (__exec_file_map__[pathWithExt]) {
         _filePath = pathWithExt;
@@ -29,10 +37,10 @@ export const createRequire = () => {
     }
   } else {
     // 第三方包
-    var ref = __external_ref_map__[filePath] && __external_ref_map__[filePath].ref;
+    var ref = __external_ref_map__[_filePath] && __external_ref_map__[_filePath].ref;
     if (ref) {
       try {
-        module.exports = window[ref.replace('window.', '')];
+        module.exports = eval(ref);
 
         return module.exports;
       } catch(e) {
@@ -40,7 +48,7 @@ export const createRequire = () => {
       }
     }
 
-    module.exports = window[filePath];
+    module.exports = window[_filePath];
   }
   
   return module.exports;
