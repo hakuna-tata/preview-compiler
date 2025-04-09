@@ -75,7 +75,7 @@ export class Compiler {
     }
 
     return `(function(__require__, module, exports) {
-      ${code}
+      ${code.replace(/\\n/g, '\\\\n')}
       
       return exports;
     })`;

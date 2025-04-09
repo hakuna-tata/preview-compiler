@@ -44,7 +44,7 @@ export const createRequire = () => {
 
         return module.exports;
       } catch(e) {
-        console.error('从 window 加载模块异常: ', ref); 
+        console.error('从 window 加载模块异常: ', ref);
       }
     }
 
