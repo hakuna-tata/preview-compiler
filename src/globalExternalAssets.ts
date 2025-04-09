@@ -8,16 +8,17 @@ export const getExternal = <
   usedDeps: U[],
 ) => {
   const result: Record<string, { ref: string }> = {};
-  const externalEquationCodeList = [];
+  const externalUrls: Array<string> = [];
 
   for (const usedDep of usedDeps) {
     const dep = deps.find((d) => d.package === usedDep.package && d.version === usedDep.version);
 
     if (dep) {
+      const url = dep.debugUrl ? dep.debugUrl : dep.cdnUrl;
+      if (!externalUrls.includes(url)) externalUrls.push(url);
       // const umdLibraryName = `Compiler_${dep.library}_Debugger`;
       const path = `${usedDep.package}${usedDep.exportPath ? `${usedDep.exportPath}` : ''}`;
       
-      externalEquationCodeList.push();
       if (!result[path]) {
         result[path] = {
           ref: usedDep.isDestruction 
@@ -28,5 +29,5 @@ export const getExternal = <
     }
   }
 
-  return result;
+  return { result, externalUrls };
 };

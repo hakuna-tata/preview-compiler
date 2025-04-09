@@ -16,7 +16,7 @@
       "package": "antd-mobile",
       "version": "5.38.0",
       "library": "antdMobile",
-      "cdnUrl": "https://cdnjs.cloudflare.com/ajax/libs/antd-mobile/5.38.0/antd-mobile.umd.min.js",
+      "cdnUrl": "https://unpkg.com/antd-mobile@5.39.0/umd/antd-mobile.js",
       "debugUrl": ""
     }
   ],
@@ -41,7 +41,7 @@
       "package": "lodash",
       "version": "4.17.21",
       "library": "_",
-      "cdnUrl": "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js",
+      "cdnUrl": "https://unpkg.com/lodash@4.17.21/lodash.js",
       "debugUrl": ""
     }
   ],

@@ -4,15 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" crossorigin></script>
+  <!-- <script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script> -->
+  <script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
 </head>
 <body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/antd-mobile/5.38.0/antd-mobile.umd.min.js" crossorigin></script>
   <div id="root"></div>
   <script>
-    const compiledCode = 
     (function(self, fn) {
       if (typeof exports !== 'undefined' && typeof module !== 'undefined') {
         module.exports = fn();
@@ -21,6 +20,7 @@
       }
     })(self, function() {
       
+var __external_url_list__ = ["https://unpkg.com/antd-mobile@5.39.0/umd/antd-mobile.js","https://unpkg.com/lodash@4.17.21/lodash.js"];
 var __external_ref_map__ = {"antd-mobile":{"ref":"antdMobile"},"lodash/kebabCase":{"ref":"_.kebabCase"},"react":{"ref":"React"},"react-dom":{"ref":"ReactDOM"}};
 var __exec_file_map__ = {
  ['hooks/useTime.js']: `(function(__require__, module, exports) {
@@ -168,19 +168,68 @@ var __require__ = function(filePath) {
 };
   
 
-var entryExports = __require__('index.jsx');
 
-return entryExports.default;
-    
-    })
+function loadScript(src, callback, errorCallback) {
+  const script = document.createElement('script');
+  script.src = src;
+  script.onload = function () {
+    callback();
+  };
+  script.onerror = function () {
+    errorCallback();
+  };
+  document.head.appendChild(script);
+}
 
-    const App = window['Preview_Compiler'];
-    var AppComponent = eval(App);
+function loadAllScripts(scripts, successCallback, errorCallback) {
+  var promises = [];
   
+  scripts.forEach(function(script) {
+    promises.push(function(done) {
+      loadScript(script, function() { done(null); }, function() { done(new Error('script 加载失败: ' + script)); })
+    })
+  });
+
+  var completed = 0;
+  var hasError = false;
+  function checkCompletion() {
+    if (completed === promises.length && !hasError) {
+      return successCallback();
+    }
+  }
+
+  promises.forEach(function (promise) {
+    promise(function (error) {
+      if(error) {
+        hasError = true;
+        errorCallback(error);
+      } else {
+        completed++;
+        checkCompletion();
+      }
+    });
+  });
+}
+
+
+loadAllScripts(
+  __external_url_list__,
+  function () {
+    var entryExports = __require__('index.jsx');
+    const AppComponent = entryExports.default || entryExports;
+
+    var App = eval(AppComponent);
     ReactDOM.render(
-      React.createElement(AppComponent),
+      React.createElement(App),
       document.getElementById('root')
     );
+  }, 
+  function (error) {
+    console.error('加载 CDN 资源失败:', error);
+  }
+);
+    
+    })
   </script>
 </body>
 </html>

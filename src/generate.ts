@@ -10,8 +10,14 @@ export const generate = async (schema: Schema, options = {}) => {
     usedUtils,
   } = schema || {};
   // 物料库 和 工具库 externals 配置
-  const materialExternalConfig = getExternal(materialDeps, usedMaterials);
-  const utilExternalConfig = getExternal(utilDeps, usedUtils);
+  const {
+    result: materialRefs,
+    externalUrls: materialUrls,
+  } = getExternal(materialDeps, usedMaterials);
+  const {
+    result: utilRefs,
+    externalUrls: utilUrls,
+  } = getExternal(utilDeps, usedUtils);
 
   // 扩展内容
   const schemaMeta = schema?.dslTree?.[0]?.meta || {};
@@ -29,15 +35,18 @@ export const generate = async (schema: Schema, options = {}) => {
     entryFilePath,
     fileMap,
     externals: {
-      ...materialExternalConfig,
-      ...utilExternalConfig,
-      ...{
-        'react': { ref: 'React' },
-        'react-dom': { ref: 'ReactDOM' },
-      }
+      refs: {
+        ...materialRefs,
+        ...utilRefs,
+        ...{
+          'react': { ref: 'React' },
+          'react-dom': { ref: 'ReactDOM' },
+        }
+      },
+      urls: [...materialUrls, ...utilUrls]
     },
     moduleName: 'Preview_Compiler',
   }).generateBundledCode();
-
-  console.log(compiledCode);
+ 
+  return compiledCode;
 }

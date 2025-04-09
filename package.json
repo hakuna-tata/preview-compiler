@@ -7,7 +7,7 @@
     "clean": "rimraf dist",
     "build": "npm run clean && tsc",
     "build:watch": "tsc --watch",
-    "test": "node dist/index.js --schema=schema.json"
+    "test": "node dist/test.js --schema=schema.json"
   },
   "repository": {
     "type": "git",
